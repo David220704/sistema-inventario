@@ -160,7 +160,7 @@ describe("ProductsController", () => {
 
       const result = await controller.update("prod-1", dto, mockUser);
 
-      expect(result.name).toBe("Updated");
+      expect(result!.name).toBe("Updated");
       expect(productsService.update).toHaveBeenCalledWith(
         "prod-1",
         dto,
