@@ -1,0 +1,113 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  password    String
+  name        String
+  role        UserRole
+  tenant_id   String
+  onboarding_completed Boolean @default(false)
+  onboarding_step      Int     @default(0)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  slug        String?
+  tenant_id   String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+  products    Product[]
+
+  @@unique([slug, tenant_id])
+}
+
+model Product {
+  id           String   @id @default(uuid())
+  name         String
+  sku          String?
+  description  String?
+  image_url    String?
+  price        Float
+  stockQuantity Int      @default(0)
+  min_quantity  Int      @default(0)
+  category_id  String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+  tenant_id    String
+  category     Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  stocks       Stock[]  // TODO: migrate to stockQuantity and remove
+  alerts       Alert[]
+  saleItems    SaleItem[]
+
+  @@unique([sku, tenant_id])
+}
+
+model Stock {
+  id            String  @id @default(uuid())
+  product_id    String
+  quantity      Int
+  location      String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now()) @updatedAt
+  product       Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+}
+
+model Alert {
+  id          String   @id @default(uuid())
+  product_id  String
+  type        AlertType
+  message     String
+  is_read     Boolean  @default(false)
+  created_at  DateTime @default(now())
+  tenant_id   String
+  product     Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum AlertType {
+  LOW_STOCK
+  OUT_OF_STOCK
+}
+
+model Sale {
+  id          String      @id @default(uuid())
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @default(now()) @updatedAt
+  total       Float
+  status      SaleStatus  @default(COMPLETED)
+  tenant_id   String
+  items       SaleItem[]
+}
+
+model SaleItem {
+  id          String   @id @default(uuid())
+  sale_id     String
+  product_id  String
+  quantity    Int
+  unit_price  Float
+  subtotal    Float
+  created_at  DateTime @default(now())
+  sale        Sale     @relation(fields: [sale_id], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+}
+
+enum SaleStatus {
+  COMPLETED
+  CANCELLED
+}

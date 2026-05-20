@@ -1,0 +1,57 @@
+# ============================================================
+# Docker Compose — Sistema Inventario
+# Servicios: PostgreSQL 16, NestJS Backend (3001), Next.js Frontend (3000)
+# ============================================================
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: inventario-db
+    environment:
+      POSTGRES_DB: inventario
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: inventario-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/inventario"
+      JWT_SECRET: "docker-dev-secret-change-in-production"
+      JWT_EXPIRES_IN: "7d"
+      PORT: "3001"
+      FRONTEND_URL: "http://localhost:3000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    container_name: inventario-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:3001"
+    restart: unless-stopped
+
+volumes:
+  pgdata:

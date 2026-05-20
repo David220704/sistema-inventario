@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+.next/
+build/
+out/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Uploads (runtime)
+apps/backend/uploads/
+!apps/backend/uploads/.gitkeep
+
+# Prisma
+apps/backend/prisma/migrations/
+apps/backend/prisma/*.db
+apps/backend/prisma/*.db-journal
+
+# Turbo
+.turbo/
+
+# Agent workspace
+.sisyphus/
+.playwright-mcp/
+
+# Coverage
+coverage/
+*.lcov
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Testing
+.vitest-results/
+
+# Temp
+tmp/
+temp/
