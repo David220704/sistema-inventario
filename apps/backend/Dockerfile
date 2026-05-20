@@ -28,4 +28,4 @@ EXPOSE 3001
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD curl -f http://localhost:3001/health || exit 1
 
-CMD ["node", "apps/backend/dist/main.js"]
+CMD cd apps/backend && npx prisma db push --skip-generate && node dist/main.js
