@@ -38,6 +38,6 @@ COPY --from=deps /app/node_modules ./node_modules
 EXPOSE 3001
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:3001/auth/login || exit 1
+  CMD curl -f http://localhost:3001/health || exit 1
 
 CMD ["node", "-r", "tsconfig-paths/register", "dist/main.js"]

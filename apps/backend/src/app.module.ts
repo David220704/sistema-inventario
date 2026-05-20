@@ -11,6 +11,7 @@ import { MetricsModule } from "./modules/metrics/metrics.module";
 import { SettingsModule } from "./modules/settings/settings.module";
 import { AlertsModule } from "./modules/alerts/alerts.module";
 import { UploadsModule } from "./modules/uploads/uploads.module";
+import { HealthModule } from "./health/health.module";
 
 /**
  * AppModule
@@ -32,6 +33,7 @@ import { UploadsModule } from "./modules/uploads/uploads.module";
     AlertsModule,
     UploadsModule,
     SettingsModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],
