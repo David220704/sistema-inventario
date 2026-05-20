@@ -21,7 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN npx prisma generate --schema=apps/backend/prisma/schema.prisma
-RUN npx tsc -p apps/backend/tsconfig.build.json
+RUN npx tsc -p apps/backend/tsconfig.build.json && npx tsc-alias -p apps/backend/tsconfig.build.json
 
 # ---------- runner ----------
 FROM base AS runner
@@ -40,4 +40,4 @@ EXPOSE 3001
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD curl -f http://localhost:3001/health || exit 1
 
-CMD ["node", "-r", "tsconfig-paths/register", "dist/main.js"]
+CMD ["node", "dist/main.js"]
