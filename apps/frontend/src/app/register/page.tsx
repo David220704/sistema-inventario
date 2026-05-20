@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+
 /**
  * Registration form. Validates passwords match and min length client-side,
  * posts to /auth/register, stores JWT, redirects to onboarding on success.
@@ -56,7 +58,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/register", {
+      const response = await axios.post(`${API_URL}/auth/register`, {
         name: formData.name,
         email: formData.email,
         password: formData.password,
