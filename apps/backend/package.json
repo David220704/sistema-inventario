@@ -18,7 +18,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.0",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@nestjs/testing": "^9.4.3",
@@ -31,7 +32,6 @@
     "@vitest/coverage-v8": "^4.1.3",
     "prisma": "^5.10.0",
     "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.6",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.3"
@@ -41,7 +41,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/main.js",
+    "start": "node -r tsconfig-paths/register dist/main.js",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
     "lint": "echo 'lint step skipped in scaffolding'",
     "format": "echo 'format step skipped in scaffolding'",
