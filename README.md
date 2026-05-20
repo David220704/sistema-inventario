@@ -18,6 +18,23 @@ Una aplicación web moderna para administrar productos, control de stock, ventas
 - [Frontend](#frontend)
 - [Testing](#testing)
 - [Guías de Desarrollo](#guías-de-desarrollo)
+- [Deploy](#deploy)
+
+---
+
+## Deploy
+
+La aplicación está disponible en producción:
+
+- **Frontend**: [https://sistema-inventario-frontend-olive.vercel.app](https://sistema-inventario-frontend-olive.vercel.app)
+- **Backend API**: [https://sistema-inventario-backend-79ko.onrender.com](https://sistema-inventario-backend-79ko.onrender.com)
+- **Base de datos**: Neon (PostgreSQL)
+
+### Credenciales de prueba
+
+| Email | Contraseña | Rol |
+|---|---|---|
+| `admin@test.com` | `Admin123!` | ADMIN |
 
 ---
 
@@ -640,29 +657,6 @@ npm run db:seed
 4. **Error handling**: Nunca dejar bloques `catch` vacíos
 5. **Código limpio**: Usar `npm run lint` y `npm run format` antes de commitear
 6. **Documentación**: Mantener JSDoc actualizado en clases, métodos y funciones exportadas
-
----
-
-## Roadmap
-
-- [x] Autenticación JWT (registro, login)
-- [x] CRUD de productos, stock, ventas, categorías
-- [x] Alertas de inventario bajo
-- [x] Dashboard con métricas
-- [x] Onboarding de nuevos usuarios
-- [x] Tests completos (240 tests — todos pasando)
-- [x] Documentación de código
-- [x] Seed mejorado con 25 productos, 6 categorías, stock, ventas y alertas realistas
-- [x] Paginación (productos, stock, ventas)
-- [x] Ordenamiento por columnas (productos, stock, ventas)
-- [x] Diseño responsive / mobile
-- [x] Auto-refresh del dashboard (30s + Visibility API)
-- [x] Exportación CSV (productos, ventas)
-- [x] Badge de stock bajo en dashboard
-- [ ] Docker Compose para desarrollo
-- [ ] Git + GitHub setup
-- [ ] CI/CD pipeline
-- [ ] Despliegue a producción
 
 ---
 
