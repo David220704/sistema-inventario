@@ -17,9 +17,12 @@ async function bootstrap() {
     prefix: "/uploads",
   });
 
-  // Enable CORS for frontend communication
+  // Enable CORS for frontend communication (dev + production)
+  const frontendUrl = process.env.FRONTEND_URL;
+  const corsOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
+  if (frontendUrl) corsOrigins.push(frontendUrl);
   app.enableCors({
-    origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
+    origin: corsOrigins,
     credentials: true,
   });
 
