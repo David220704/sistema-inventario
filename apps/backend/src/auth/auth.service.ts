@@ -26,30 +26,20 @@ export class AuthService {
   async register(registerDto: RegisterDto) {
     const { email, password, name, tenant_id } = registerDto;
 
-    console.log("[AUTH] register() called with:", { email, name, tenant_id });
-
     // Check if user already exists
     const existingUser = await this.prisma.user.findUnique({
       where: { email },
     });
 
-    console.log(
-      "[AUTH] existingUser check:",
-      existingUser ? "FOUND" : "NOT FOUND",
-    );
-
     if (existingUser) {
-      console.log("[AUTH] User already exists, throwing ConflictException");
       throw new ConflictException("User with this email already exists");
     }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("[AUTH] Password hashed successfully");
 
     // Create tenant if not provided (single-tenant app)
     const finalTenantId = tenant_id || `tenant_${Date.now()}`;
-    console.log("[AUTH] finalTenantId:", finalTenantId);
 
     try {
       // Create user
@@ -63,14 +53,8 @@ export class AuthService {
         },
       });
 
-      console.log("[AUTH] User created successfully:", {
-        id: user.id,
-        email: user.email,
-      });
-
       // Generate JWT
       const token = this.generateToken(user.id, user.email, user.tenant_id);
-      console.log("[AUTH] Token generated successfully");
 
       return {
         user: {
@@ -83,7 +67,6 @@ export class AuthService {
         access_token: token,
       };
     } catch (error) {
-      console.error("[AUTH] Error during registration:", error);
       throw error;
     }
   }
